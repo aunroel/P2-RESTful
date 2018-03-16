@@ -40,7 +40,8 @@ public class User {
 
     public User(String userName, String password, boolean isAdmin, Comment comment,
                 Notification notification, Photo photo) {
-        User user = new UserBuilder().id()
+        User user = new UserBuilder()
+                .id()
                 .userName(userName)
                 .passwordSha256Hex(password)
                 .isAdmin(isAdmin)
@@ -83,6 +84,10 @@ public class User {
 
     public ArrayList<Photo> getPhotos() {
         return photos;
+    }
+
+    public static AtomicLong getCounter() {
+        return counter;
     }
 
     @Override
