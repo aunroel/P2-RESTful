@@ -46,6 +46,10 @@ public class Photo {
         return comments;
     }
 
+    public static AtomicLong getCounter() {
+        return counter;
+    }
+
     @Override
     public String toString() {
         return "Photo ID: " + id
@@ -74,6 +78,11 @@ public class Photo {
 
         public PhotoBuilder id() {
             this.id = Photo.counter.getAndIncrement();
+            return this;
+        }
+
+        public PhotoBuilder id(long id) {
+            this.id = id;
             return this;
         }
 
