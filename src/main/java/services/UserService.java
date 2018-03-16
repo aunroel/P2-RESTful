@@ -5,8 +5,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import entities.PseudoDB;
 import entities.User;
+import exceptions.JsonError;
+import exceptions.NotFoundException;
 
-import javax.jws.soap.SOAPBinding;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
