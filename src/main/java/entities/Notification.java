@@ -50,7 +50,7 @@ public class Notification {
         return "Notification ID: " + id
                 + "\nowner: " + owner.getUserName()
                 + "\ncomment at: " + comment.getTimeStamp()
-                + "\ncomment from: " + comment.getAuthor()
+                + "\ncomment from: " + comment.getAuthor().getUserName()
                 + "\ncomment body: " + comment.getBody()
                 + "\nis reply: " + isReply
                 + "\n";

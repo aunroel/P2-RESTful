@@ -256,7 +256,7 @@ public class CommentService {
 
     @PUT
     @Path("/remove/{uId}/{cId}")
-    public Response deleteUser(@PathParam("uId") long uId, @PathParam("cId") long cId) {
+    public Response deleteComment(@PathParam("uId") long uId, @PathParam("cId") long cId) {
         Optional<User> userMatch = userList.stream()
                 .filter(u -> u.getId() == uId)
                 .findFirst();
