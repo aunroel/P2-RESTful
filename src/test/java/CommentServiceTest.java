@@ -5,7 +5,6 @@ import entities.PseudoDB;
 import entities.User;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
-import org.junit.Before;
 import org.junit.Test;
 import services.CommentService;
 

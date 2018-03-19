@@ -24,11 +24,12 @@ public class UserServiceTest extends JerseyTest {
     @Test
     public void usersAmountTest() {
         String response = target("users/all").request().get(String.class);
-        String[] uniqueUsers = response.split("ID:");
 
         // first element of the array is the phrase "Users list", so we don't count it
-        // need to use user list because the test fails if all tests are run
-        // (probably cause of addition of new user in later test)
+        String[] uniqueUsers = response.split("ID:");
+
+        // need to use user list because the test fails if all tests are run simultaneously
+        // (probably cause of addition of new user in later tests)
         // original users size is 4
         assertEquals(PseudoDB.getUsers().size(), uniqueUsers.length - 1);
 
