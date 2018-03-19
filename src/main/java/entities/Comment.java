@@ -103,6 +103,23 @@ public class Comment {
         this.downVotes++;
     }
 
+    public static AtomicLong getCounter() {
+        return counter;
+    }
+
+    public Comment update(Comment comment) {
+        this.id = comment.getId();
+        this.author = comment.getAuthor();
+        this.timeStamp = comment.getTimeStamp();
+        this.body = comment.getBody();
+        this.replies = comment.getReplies();
+        this.upVotes = 0;
+        this.downVotes = 0;
+        this.isRead = comment.isRead;
+
+        return this;
+    }
+
     @Override
     public String toString() {
         return "Comment ID: " + id
@@ -131,6 +148,11 @@ public class Comment {
             return this;
         }
 
+        public CommentBuilder id(long id) {
+            this.id = id;
+            return this;
+        }
+
         public CommentBuilder author(User author) {
             this.author = author;
             return this;
@@ -152,6 +174,14 @@ public class Comment {
                 return this;
 
             this.replies.add(comment);
+            return this;
+        }
+
+        public CommentBuilder replies(ArrayList<Comment> comment) {
+            if (comment == null)
+                return this;
+
+            this.replies.addAll(comment);
             return this;
         }
 

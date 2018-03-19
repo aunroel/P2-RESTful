@@ -148,9 +148,12 @@ public class PseudoDB {
                 .isReply(true)
                 .build();
 
+        // TODO fix replies with nicky and sam counter
+
         samToNicky.getReplies().add(nickyRepliesSam);
         samToNicky.getReplies().add(samRepliesNicky);
         aaronCommentsNicky.getReplies().add(nickyRepliesAaron);
+//        nickyRepliesSam.getReplies().add(samRepliesNicky);
         nicky.getComments().add(nickyRepliesSam);
         nicky.getComments().add(nickyToAaron);
         nicky.getComments().add(nickyRepliesAaron);

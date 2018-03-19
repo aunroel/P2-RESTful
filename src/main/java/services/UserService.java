@@ -5,8 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import entities.PseudoDB;
 import entities.User;
-import exceptions.JsonError;
-import exceptions.NotFoundException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -92,10 +90,11 @@ public class UserService {
 
     @DELETE
     @Path("/remove/{id}")
-    public void deleteUser(@PathParam("id") long id) {
+    public Response deleteUser(@PathParam("id") long id) {
         Predicate<User> user = u ->u.getId() == id;
         if (!userList.removeIf(user)) {
-            throw new NotFoundException(new JsonError("Error", "User " + id + " not found"));
-        }
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        } else
+            return Response.status(Response.Status.OK).build();
     }
 }
