@@ -124,6 +124,16 @@ public class PseudoDB {
                 .read(false)
                 .build();
 
+        Comment bearToItself = new Comment.CommentBuilder().id()
+                .author(bear)
+                .timeStamp()
+                .body("bear to bear")
+                .reply(null)
+                .upVote()
+                .read(true)
+                .build();
+
+
         Notification samReplyNotification = new Notification.NotificationBuilder().id()
                 .owner(sam)
                 .isReply(true)
@@ -154,16 +164,19 @@ public class PseudoDB {
         samToNicky.getReplies().add(samRepliesNicky);
         aaronCommentsNicky.getReplies().add(nickyRepliesAaron);
 //        nickyRepliesSam.getReplies().add(samRepliesNicky);
+
         nicky.getComments().add(nickyRepliesSam);
         nicky.getComments().add(nickyToAaron);
         nicky.getComments().add(nickyRepliesAaron);
         aaron.getComments().add(aaronCommentsNicky);
         sam.getComments().add(samToNicky);
         sam.getComments().add(samRepliesNicky);
+        bear.getComments().add(bearToItself);
 
         nickyPhoto.getComments().add(samToNicky);
         nickyPhoto.getComments().add(aaronCommentsNicky);
         aaronPhoto.getComments().add(nickyToAaron);
+        bearPhoto.getComments().add(bearToItself);
 
         sam.getNotifications().add(samReplyNotification);
         nicky.getNotifications().add(nickyReplyNotif);
@@ -186,6 +199,7 @@ public class PseudoDB {
         commentList.add(nickyToAaron);
         commentList.add(aaronCommentsNicky);
         commentList.add(nickyRepliesAaron);
+        commentList.add(bearToItself);
 
         photoList.add(nickyPhoto);
         photoList.add(samPhoto);

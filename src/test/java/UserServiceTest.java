@@ -29,6 +29,7 @@ public class UserServiceTest extends JerseyTest {
         // first element of the array is the phrase "Users list", so we don't count it
         // need to use user list because the test fails if all tests are run
         // (probably cause of addition of new user in later test)
+        // original users size is 4
         assertEquals(PseudoDB.getUsers().size(), uniqueUsers.length - 1);
 
     }
@@ -46,9 +47,19 @@ public class UserServiceTest extends JerseyTest {
     }
 
     @Test
-    public void getAllUserCommentsTest() {
+    public void getAllUserCommentsTest1() {
         String response = target("users/all/3/comments").request().get(String.class);
+        // user with id 3 has only 1 comment
         assertTrue(response.contains("wait, was it your birthday not long ago?"));
+    }
+
+    @Test
+    public void getAllUserCommentsTest2() {
+        String response = target("users/all/1/comments").request().get(String.class);
+        // user with id 3 has only 1 comment
+        assertTrue(response.contains("yeah, got it couple weeks ago as a present!"));
+        assertTrue(response.contains("awesome views!"));
+        assertTrue(response.contains("yes! and someone forgot about it -_-"));
     }
 
     @Test

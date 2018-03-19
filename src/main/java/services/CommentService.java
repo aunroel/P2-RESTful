@@ -177,7 +177,7 @@ public class CommentService {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
         } else
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
 
         return Response.status(201).build();
     }

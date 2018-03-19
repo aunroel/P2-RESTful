@@ -25,6 +25,7 @@ public class PhotoServiceTest extends JerseyTest {
     public void photosAmountTest() {
         String response = target("photos/all").request().get(String.class);
         String[] uniquePhotos = response.split("Photo ID:");
+        // original amount of photos = 4
         assertEquals(PseudoDB.getPhotos().size(), uniquePhotos.length - 1);
     }
 
