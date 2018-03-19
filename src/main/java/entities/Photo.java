@@ -1,7 +1,6 @@
 package entities;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Photo {

@@ -179,6 +179,7 @@ public class PseudoDB {
 
         commentList.add(samToNicky);
         commentList.add(nickyRepliesSam);
+        commentList.add(samRepliesNicky);
         commentList.add(nickyToAaron);
         commentList.add(aaronCommentsNicky);
         commentList.add(nickyRepliesAaron);

@@ -82,7 +82,6 @@ public class PhotoService {
     }
 
 
-    // TODO need to test this
     @POST
     @Path("/addPhoto/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -114,6 +113,5 @@ public class PhotoService {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-
 
 }
