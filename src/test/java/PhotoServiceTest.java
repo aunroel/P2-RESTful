@@ -1,5 +1,6 @@
 import com.google.gson.Gson;
 import entities.Photo;
+import entities.PseudoDB;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class PhotoServiceTest extends JerseyTest {
     public void photosAmountTest() {
         String response = target("photos/all").request().get(String.class);
         String[] uniquePhotos = response.split("Photo ID:");
-        assertEquals(4, uniquePhotos.length - 1);
+        assertEquals(PseudoDB.getPhotos().size(), uniquePhotos.length - 1);
     }
 
     @Test
