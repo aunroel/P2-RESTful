@@ -3,6 +3,7 @@ package services;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import entities.Notification;
 import entities.PseudoDB;
 import entities.User;
 
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final CopyOnWriteArrayList<User> userList = PseudoDB.getUsers();
+    private final CopyOnWriteArrayList<Notification> notifList = PseudoDB.getNotifications();
+
     private final Gson gson = new Gson();
 
     @GET
@@ -59,6 +62,32 @@ public class UserService {
             sb.append("--- User comments ---\n");
             for (int i = 0; i < match.get().getComments().size(); i++) {
                 sb.append(match.get().getComments().get(i).toString()).append("\n");
+            }
+            return sb.toString();
+        } else {
+            return "User not found";
+        }
+    }
+
+    @GET
+    @Path("/all/{id}/notifications")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getUserNotif(@PathParam("id") long id) {
+        Optional<User> match = userList.stream()
+                .filter(u -> u.getId() == id)
+                .findFirst();
+        if (match.isPresent()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("--- User notifications ---\n");
+            if (match.get().getNotifications().size() == 0) {
+                return sb.append("No notifications").append("\n").toString();
+            }
+            for (int i = 0; i < match.get().getNotifications().size(); i++) {
+                match.get().getNotifications().get(i).getComment().setRead(true);
+                sb.append(match.get().getNotifications().get(i).toString()).append("\n");
+                notifList.remove(match.get().getNotifications().get(i));
+                match.get().getNotifications().remove(match.get().getNotifications().get(i));
+
             }
             return sb.toString();
         } else {

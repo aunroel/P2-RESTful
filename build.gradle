@@ -20,6 +20,10 @@ dependencies {
     compile 'org.glassfish.jersey.connectors:jersey-grizzly-connector:'+jerseyVersion
     compile 'com.google.code.gson:gson:2.4'
 
+    // https://mvnrepository.com/artifact/org.glassfish.jersey.test-framework.providers/jersey-test-framework-provider-jdk-http
+    compile group: 'org.glassfish.jersey.test-framework.providers', name: 'jersey-test-framework-provider-jdk-http', version: '2.26'
+
+
     // https://mvnrepository.com/artifact/commons-codec/commons-codec
     compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
 

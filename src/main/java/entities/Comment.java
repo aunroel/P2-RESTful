@@ -107,6 +107,10 @@ public class Comment {
         return counter;
     }
 
+    public void setRead(boolean read) {
+        isRead = read;
+    }
+
     public Comment update(Comment comment) {
         this.id = comment.getId();
         this.author = comment.getAuthor();
