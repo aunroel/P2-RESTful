@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Photo {
@@ -60,14 +61,28 @@ public class Photo {
     }
 
     private int getCommentsAmount() {
-        int amount = comments.size();
+        ArrayList<Long> countedComments = new ArrayList<Long>();
         for (int i = 0; i < comments.size(); i++) {
-            if (comments.get(i).getReplies().size() != 0) {
-                amount += comments.get(i).getReplies().size();
+            if (!countedComments.contains(comments.get(i).getId())) {
+                countedComments.add(comments.get(i).getId());
+                if (comments.get(i).getReplies().size() != 0) {
+                     countNestedReplies(comments.get(i).getReplies(), countedComments);
+                }
+            } else
+                continue;
+        }
+        return countedComments.size();
+    }
+
+    private void countNestedReplies(ArrayList<Comment> replies, ArrayList<Long> cc) {
+        for (int i = 0; i < replies.size(); i++) {
+            if (!cc.contains(replies.get(i).getId())) {
+                cc.add(replies.get(i).getId());
+                if (replies.get(i).getReplies().size() != 0) {
+                     countNestedReplies(replies.get(i).getReplies(), cc);
+                }
             }
         }
-
-        return amount;
     }
 
     public static class PhotoBuilder {

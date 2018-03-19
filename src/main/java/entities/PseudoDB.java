@@ -80,14 +80,41 @@ public class PseudoDB {
                 .read(true)
                 .build();
 
-        Comment nickyReplies = new Comment.CommentBuilder().id()
+        Comment nickyRepliesSam = new Comment.CommentBuilder().id()
                 .author(nicky)
                 .timeStamp()
                 .body("yeah, got it couple weeks ago as a present!")
                 .reply(null)
                 .upVote()
+                .read(true)
+                .build();
+
+        Comment samRepliesNicky = new Comment.CommentBuilder().id()
+                .author(sam)
+                .timeStamp()
+                .body("nice, it's really cute!")
+                .reply(null)
+                .upVote()
                 .read(false)
                 .build();
+
+        Comment aaronCommentsNicky = new Comment.CommentBuilder().id()
+                .author(aaron)
+                .timeStamp()
+                .body("wait, was it your birthday not long ago?")
+                .reply(null)
+                .downVote()
+                .read(true)
+                .build();
+
+        Comment nickyRepliesAaron = new Comment.CommentBuilder().id()
+                .author(nicky)
+                .timeStamp()
+                .body("yes! and someone forgot about it -_-")
+                .reply(null)
+                .read(false)
+                .build();
+
 
         Comment nickyToAaron = new Comment.CommentBuilder().id()
                 .timeStamp()
@@ -100,7 +127,13 @@ public class PseudoDB {
         Notification samReplyNotification = new Notification.NotificationBuilder().id()
                 .owner(sam)
                 .isReply(true)
-                .comment(nickyReplies)
+                .comment(nickyRepliesSam)
+                .build();
+
+        Notification nickyReplyNotif = new Notification.NotificationBuilder().id()
+                .owner(nicky)
+                .isReply(true)
+                .comment(samRepliesNicky)
                 .build();
 
         Notification aaronNewCommNotif = new Notification.NotificationBuilder().id()
@@ -109,15 +142,30 @@ public class PseudoDB {
                 .isReply(false)
                 .build();
 
-        samToNicky.getReplies().add(nickyReplies);
-        nicky.getComments().add(nickyReplies);
+        Notification aaronReplyNotif = new Notification.NotificationBuilder().id()
+                .owner(aaron)
+                .comment(nickyRepliesAaron)
+                .isReply(true)
+                .build();
+
+        samToNicky.getReplies().add(nickyRepliesSam);
+        samToNicky.getReplies().add(samRepliesNicky);
+        aaronCommentsNicky.getReplies().add(nickyRepliesAaron);
+        nicky.getComments().add(nickyRepliesSam);
         nicky.getComments().add(nickyToAaron);
+        nicky.getComments().add(nickyRepliesAaron);
+        aaron.getComments().add(aaronCommentsNicky);
         sam.getComments().add(samToNicky);
+        sam.getComments().add(samRepliesNicky);
 
         nickyPhoto.getComments().add(samToNicky);
+        nickyPhoto.getComments().add(aaronCommentsNicky);
         aaronPhoto.getComments().add(nickyToAaron);
+
         sam.getNotifications().add(samReplyNotification);
+        nicky.getNotifications().add(nickyReplyNotif);
         aaron.getNotifications().add(aaronNewCommNotif);
+        aaron.getNotifications().add(aaronReplyNotif);
 
         nicky.getPhotos().add(nickyPhoto);
         bear.getPhotos().add(bearPhoto);
@@ -130,8 +178,10 @@ public class PseudoDB {
         userList.add(sam);
 
         commentList.add(samToNicky);
-        commentList.add(nickyReplies);
+        commentList.add(nickyRepliesSam);
         commentList.add(nickyToAaron);
+        commentList.add(aaronCommentsNicky);
+        commentList.add(nickyRepliesAaron);
 
         photoList.add(nickyPhoto);
         photoList.add(samPhoto);
@@ -139,7 +189,9 @@ public class PseudoDB {
         photoList.add(aaronPhoto);
 
         notificationList.add(samReplyNotification);
+        notificationList.add(nickyReplyNotif);
         notificationList.add(aaronNewCommNotif);
+        notificationList.add(aaronReplyNotif);
 
     }
 

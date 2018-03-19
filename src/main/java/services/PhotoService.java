@@ -73,7 +73,6 @@ public class PhotoService {
     }
 
 
-    // TODO need to test it as well
     private void retrieveReplies(ArrayList<Comment> replies, StringBuilder sb) {
         for (int i = 0; i < replies.size(); i++) {
             sb.append(replies.get(i).toString()).append("\n");
