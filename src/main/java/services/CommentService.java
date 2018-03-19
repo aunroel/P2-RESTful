@@ -254,7 +254,7 @@ public class CommentService {
         return Response.status(201).build();
     }
 
-    @DELETE
+    @PUT
     @Path("/remove/{uId}/{cId}")
     public Response deleteUser(@PathParam("uId") long uId, @PathParam("cId") long cId) {
         Optional<User> userMatch = userList.stream()
