@@ -26,6 +26,10 @@ public class UserService {
 
     private final Gson gson = new Gson();
 
+    /**
+     * Get all users as a string
+     * @return list of all users in the system
+     */
     @GET
     @Path("/all")
     @Produces(MediaType.TEXT_PLAIN)
@@ -36,6 +40,11 @@ public class UserService {
                 .collect(Collectors.joining("\n"));
     }
 
+    /**
+     * Get details of specified user
+     * @param id id of user to be retrieved
+     * @return user details as a string or an error
+     */
     @GET
     @Path("/all/{id}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -50,6 +59,11 @@ public class UserService {
         }
     }
 
+    /**
+     * Get all the comments posted by specified user
+     * @param id id of user to retrieve comments from
+     * @return list of user comments as a string or an error
+     */
     @GET
     @Path("/all/{id}/comments")
     @Produces(MediaType.TEXT_PLAIN)
@@ -69,6 +83,12 @@ public class UserService {
         }
     }
 
+    /**
+     * Get all the notifications of specified user and read them (remove from the notifications list
+     * and mark all comments as read).
+     * @param id id of the user to retrieve notification from
+     * @return list of notification for specified user or an error
+     */
     @GET
     @Path("/all/{id}/notifications")
     @Produces(MediaType.TEXT_PLAIN)
@@ -95,6 +115,12 @@ public class UserService {
         }
     }
 
+    /**
+     * Add new user to the system
+     * @param is input stream to read the input
+     * @return 201 if success
+     * @throws UnsupportedEncodingException
+     */
     @POST
     @Path("/addUser")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -117,6 +143,12 @@ public class UserService {
         return Response.status(201).build();
     }
 
+    /**
+     * Remove specified user from the system. All the photos and comments of deleted
+     * user remain in the system, however notifications (if any) are removed.
+     * @param id id of user to be removed
+     * @return 200 if success, 400 if id invalid
+     */
     @DELETE
     @Path("/remove/{id}")
     public Response deleteUser(@PathParam("id") long id) {
@@ -124,6 +156,11 @@ public class UserService {
         if (!userList.removeIf(user)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         } else
+            for (int i = 0; i < notifList.size(); i++) {
+            if (notifList.get(i).getOwner().getId() == id) {
+                notifList.remove(i);
+            }
+            }
             return Response.status(Response.Status.OK).build();
     }
 }

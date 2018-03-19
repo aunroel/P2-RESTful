@@ -26,6 +26,10 @@ public class CommentService {
 
     private Gson gson = new Gson();
 
+    /**
+     * Retrieves all the comments from the system
+     * @return all comments as a formatted string
+     */
     @GET
     @Path("/all")
     @Produces(MediaType.TEXT_PLAIN)
@@ -36,6 +40,11 @@ public class CommentService {
                 .collect(Collectors.joining("\n"));
     }
 
+    /**
+     * Retrieve specific comment from the system
+     * @param id - id of the comment to be retrieved
+     * @return requested comment as a String or an error message
+     */
     @GET
     @Path("/all/{id}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -50,6 +59,11 @@ public class CommentService {
         }
     }
 
+    /**
+     * Retrieve all the replies(including nested) for specified comment
+     * @param id - id of the comment to get replies to
+     * @return all the replies to the comment or error message
+     */
     @GET
     @Path("/{id}/replies")
     @Produces(MediaType.TEXT_PLAIN)
@@ -80,6 +94,11 @@ public class CommentService {
         }
     }
 
+    /**
+     * Recursive method to retrieve threaded replies for a comment
+     * @param replies list of replies to particular comment
+     * @param sb string builder instance with all comments
+     */
     private void retrieveReplies(ArrayList<Comment> replies, StringBuilder sb) {
         for (int i = 0; i < replies.size(); i++) {
             sb.append(replies.get(i).toString()).append("\n");
@@ -89,9 +108,9 @@ public class CommentService {
     }
 
     /**
-     * Done
-     * @param id
-     * @return
+     * Upvote specified comment
+     * @param id - id of comment to upvote
+     * @return 200 if success or 404 if not
      */
     @PUT
     @Path("/{id}/upvote")
@@ -109,9 +128,9 @@ public class CommentService {
     }
 
     /**
-     *  Done
-     * @param id
-     * @return
+     *  Downvote specified comment
+     * @param id - id of comment to downvote
+     * @return 200 if success or 404 if not
      */
     @PUT
     @Path("/{id}/downvote")
@@ -128,6 +147,15 @@ public class CommentService {
         }
     }
 
+    /**
+     * Add new comment to specified photo by specified user. Also creates
+     * notification for owner of the photo if not same with user that posts
+     * @param pId - id of photo to comment
+     * @param uId - id of user that comments
+     * @param is - input stream to read server response
+     * @return 201 if success, 404 if user not found, 400 if photo not found
+     * @throws UnsupportedEncodingException
+     */
     @POST
     @Path("/{pId}/addComment/{uId}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -180,6 +208,17 @@ public class CommentService {
         return Response.status(201).build();
     }
 
+    /**
+     * Post a reply to specified comment under specified photo by specified user.
+     * Creates notifications (if applicable) for owner of the photo and owner of the original comment that is
+     * replied to.
+     * @param pId id of the photo to reply under
+     * @param uId id of the user that replies
+     * @param cId id of the comment that is replied to
+     * @param is input stream to read the data
+     * @return 201 if success, 404 if any id is invalid
+     * @throws UnsupportedEncodingException
+     */
     @POST
     @Path("/{pId}/reply/{uId}/{cId}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -253,6 +292,12 @@ public class CommentService {
         return Response.status(201).build();
     }
 
+    /**
+     * Replaces the specified comment by a note "removed by admin" if the removing user is admin
+     * @param uId id of user that is trying to remove
+     * @param cId id of comment to be removed
+     * @return 200 if success, 404 if ids are invalid, 403 if user is not admin
+     */
     @PUT
     @Path("/remove/{uId}/{cId}")
     public Response deleteComment(@PathParam("uId") long uId, @PathParam("cId") long cId) {

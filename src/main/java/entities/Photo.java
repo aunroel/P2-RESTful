@@ -59,8 +59,15 @@ public class Photo {
                 + "\n";
     }
 
+    /**
+     * counts the amount of comments for this photo
+     * Uses a list with unique ids of comments in order to avoid
+     * duplication counting due to the linked structure
+     * of the system.
+     * @return
+     */
     private int getCommentsAmount() {
-        ArrayList<Long> countedComments = new ArrayList<Long>();
+        ArrayList<Long> countedComments = new ArrayList<>();
         for (int i = 0; i < comments.size(); i++) {
             if (!countedComments.contains(comments.get(i).getId())) {
                 countedComments.add(comments.get(i).getId());
@@ -73,6 +80,12 @@ public class Photo {
         return countedComments.size();
     }
 
+    /**
+     * Iterates through nested replies to each comment (if any) and
+     * counts them if they have not yet been.
+     * @param replies
+     * @param cc
+     */
     private void countNestedReplies(ArrayList<Comment> replies, ArrayList<Long> cc) {
         for (int i = 0; i < replies.size(); i++) {
             if (!cc.contains(replies.get(i).getId())) {

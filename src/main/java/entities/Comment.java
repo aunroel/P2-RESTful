@@ -162,6 +162,10 @@ public class Comment {
             return this;
         }
 
+        /**
+         * Timestamp takes current time in specified format and saves it to respectable field
+         * @return comment builder instance
+         */
         public CommentBuilder timeStamp() {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             this.timeStamp = LocalDateTime.now().format(formatter);

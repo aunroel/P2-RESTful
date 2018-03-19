@@ -127,6 +127,14 @@ public class User {
             return this;
         }
 
+        /**
+         * Encrypts user password into sha256 hex form and stores
+         * it this way on the server.
+         * Did not want to store and operate on original passwords
+         * across the network
+         * @param password
+         * @return
+         */
         public UserBuilder passwordSha256Hex(String password) {
             this.sha256hexPassword = DigestUtils.sha256Hex(password);
             return this;

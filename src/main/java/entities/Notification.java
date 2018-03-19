@@ -22,6 +22,7 @@ public class Notification {
         Notification nf = new NotificationBuilder().id()
                 .owner(owner)
                 .comment(comment)
+                .isReply(isReply)
                 .build();
         this.id = nf.getId();
         this.owner = nf.getOwner();

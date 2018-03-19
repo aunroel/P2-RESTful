@@ -216,7 +216,7 @@ public class PseudoDB {
 
     /**
      * Get user list from the "DB"
-     * @return
+     * @return list of users
      */
     public static CopyOnWriteArrayList<User> getUsers() {
         return userList;
@@ -224,7 +224,7 @@ public class PseudoDB {
 
     /**
      * Get photo list from the "DB"
-     * @return
+     * @return list of photos
      */
     public static CopyOnWriteArrayList<Photo> getPhotos() {
         return photoList;
@@ -232,7 +232,7 @@ public class PseudoDB {
 
     /**
      * Get comment list from the "DB"
-     * @return
+     * @return list of comments
      */
     public static CopyOnWriteArrayList<Comment> getComments() {
         return commentList;
@@ -241,7 +241,7 @@ public class PseudoDB {
 
     /**
      * Get notification list from the "DB"
-     * @return
+     * @return list of notifications
      */
     public static CopyOnWriteArrayList<Notification> getNotifications() {
         return notificationList;

@@ -15,6 +15,10 @@ public class NotificationService {
     private final CopyOnWriteArrayList<Notification> notificationList = PseudoDB.getNotifications();
 
 
+    /**
+     * Get all the notifications from the server regardless of their owners
+     * @return string representation of all the notifications
+     */
     @GET
     @Path("/all")
     @Produces(MediaType.TEXT_PLAIN)
@@ -25,6 +29,11 @@ public class NotificationService {
                 .collect(Collectors.joining("\n"));
     }
 
+    /**
+     * Get specified notification from the server or an error if there is none with such an id
+     * @param id id of the notification to be retrieved
+     * @return specified notification or an error message
+     */
     @GET
     @Path("/all/{id}")
     @Produces(MediaType.TEXT_PLAIN)

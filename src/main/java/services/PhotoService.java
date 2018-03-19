@@ -25,6 +25,10 @@ public class PhotoService {
     private final CopyOnWriteArrayList<Photo> photoList = PseudoDB.getPhotos();
     private final Gson gson = new Gson();
 
+    /**
+     * Get all photos from the server as formatted string
+     * @return all photos as a string
+     */
     @GET
     @Path("/all")
     @Produces(MediaType.TEXT_PLAIN)
@@ -35,6 +39,11 @@ public class PhotoService {
                 .collect(Collectors.joining("\n"));
     }
 
+    /**
+     * Get particular photo specified by an id
+     * @param id id of the photo
+     * @return photo with its details or an error if id is invalid
+     */
     @GET
     @Path("/all/{id}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -49,6 +58,11 @@ public class PhotoService {
         }
     }
 
+    /**
+     * Get all the comments (including threaded) of specified photo
+     * @param id id of photo to retrieve comments from
+     * @return all comments for specified photo or an error
+     */
     @GET
     @Path("/all/{id}/comments")
     @Produces(MediaType.TEXT_PLAIN)
@@ -72,7 +86,11 @@ public class PhotoService {
         }
     }
 
-
+    /**
+     * Recursive method to help retrieve threaded comments (replies)
+     * @param replies list of replies to some comment
+     * @param sb sb that holds all processed comments
+     */
     private void retrieveReplies(ArrayList<Comment> replies, StringBuilder sb) {
         for (int i = 0; i < replies.size(); i++) {
             sb.append(replies.get(i).toString()).append("\n");
@@ -82,6 +100,13 @@ public class PhotoService {
     }
 
 
+    /**
+     * Add photo from specified user to the system
+     * @param id id of users that posts a new photo
+     * @param is input stream to read the input
+     * @return 201 if success, 404 if id is invalid
+     * @throws UnsupportedEncodingException
+     */
     @POST
     @Path("/addPhoto/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
