@@ -1,3 +1,4 @@
+import entities.PseudoDB;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class NotificationServiceTest extends JerseyTest {
     public void notificationsAmountTest() {
         String response = target("notifications/all").request().get(String.class);
         String[] uniqueNotif = response.split("Notification ID:");
-        assertEquals(4, uniqueNotif.length - 1);
+        assertEquals(PseudoDB.getNotifications().size(), uniqueNotif.length - 1);
     }
 
     @Test

@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Photo {
 
     private final long id;
-    private final User author;
+    private final transient User author;
     private final String name;
     private final ArrayList<Comment> comments;
 

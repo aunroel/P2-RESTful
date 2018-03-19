@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Comment {
 
     private long id;
-    private User author;
+    private transient User author;
     private String timeStamp;
     private String body;
     private ArrayList<Comment> replies;

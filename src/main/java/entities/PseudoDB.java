@@ -210,23 +210,39 @@ public class PseudoDB {
         notificationList.add(nickyReplyNotif);
         notificationList.add(aaronNewCommNotif);
         notificationList.add(aaronReplyNotif);
-
     }
 
     private PseudoDB() {}
 
+    /**
+     * Get user list from the "DB"
+     * @return
+     */
     public static CopyOnWriteArrayList<User> getUsers() {
         return userList;
     }
 
+    /**
+     * Get photo list from the "DB"
+     * @return
+     */
     public static CopyOnWriteArrayList<Photo> getPhotos() {
         return photoList;
     }
 
+    /**
+     * Get comment list from the "DB"
+     * @return
+     */
     public static CopyOnWriteArrayList<Comment> getComments() {
         return commentList;
     }
 
+
+    /**
+     * Get notification list from the "DB"
+     * @return
+     */
     public static CopyOnWriteArrayList<Notification> getNotifications() {
         return notificationList;
     }

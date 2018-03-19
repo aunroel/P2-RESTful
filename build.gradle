@@ -2,6 +2,8 @@ group 'cs5031.stadnrews.ac.uk'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'findbugs'
+
 
 sourceCompatibility = 1.8
 

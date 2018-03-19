@@ -27,7 +27,6 @@ public class CommentServiceTest extends JerseyTest{
     }
 
     @Test
-    @Before
     public void commentsAmountTest() {
         String response = target("comments/all").request().get(String.class);
         String[] uniqueUsers = response.split("Comment ID:");
@@ -95,6 +94,51 @@ public class CommentServiceTest extends JerseyTest{
     }
 
     @Test
+    public void addCommentToPhotoTest() {
+        Gson gson = new Gson();
+        Comment comment = new Comment.CommentBuilder()
+                .id()
+                .author(new User())
+                .timeStamp()
+                .body("test add comment")
+                .reply(null)
+                .read(false)
+                .build();
+
+        String json = gson.toJson(comment, Comment.class);
+
+        // user with id 2 is the one posting a comment to photo with id 203
+        Response response = target("comments/201/addComment/2")
+                .request()
+                .post(Entity.json(json));
+
+        assertEquals("Should return status 201", 201, response.getStatus());
+    }
+
+    @Test
+    public void addReplyToCommentTest() {
+        Gson gson = new Gson();
+        Comment comment = new Comment.CommentBuilder()
+                .id()
+                .author(new User())
+                .timeStamp()
+                .body("test add reply")
+                .reply(null)
+                .read(false)
+                .build();
+
+        String json = gson.toJson(comment, Comment.class);
+
+        // user with id 2 is the one posting a reply to comment with id 106 on photo with id 201
+        Response response = target("comments/201/reply/2/106")
+                .request()
+                .post(Entity.json(json));
+
+        assertEquals("Should return status 201", 201, response.getStatus());
+    }
+
+
+    @Test
     public void addNoSuchUserCommentTest() {
         Gson gson = new Gson();
         Comment comment = new Comment.CommentBuilder()
@@ -117,7 +161,7 @@ public class CommentServiceTest extends JerseyTest{
 
     @Test
     public void addNoSuchPhotoCommentTest() {
-        Response response = target("comments/101/addComment")
+        Response response = target("comments/101/addComment/2")
                 .request()
                 .post(Entity.json(""));
 

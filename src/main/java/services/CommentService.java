@@ -129,26 +129,25 @@ public class CommentService {
     }
 
     @POST
-    @Path("/{pId}/addComment")
+    @Path("/{pId}/addComment/{uId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addNewComment(@PathParam("pId") long pId, InputStream is) throws UnsupportedEncodingException {
+    public Response addNewComment(@PathParam("pId") long pId, @PathParam("uId") long uId, InputStream is) throws UnsupportedEncodingException {
         Optional<Photo> photoMatch = photoList.stream()
                 .filter(p -> p.getId() == pId)
                 .findFirst();
         if (photoMatch.isPresent()) {
-            Comment comment;
-            JsonParser parser = new JsonParser();
-            JsonElement json = parser.parse(new InputStreamReader(is, "UTF-8"));
-            long commentId = Comment.getCounter().get();
-            comment = gson.fromJson(json, Comment.class);
-
-            Comment finalComment = comment;
             Optional<User> userMatch = userList.stream()
-                    .filter(u -> u.getId() == finalComment.getAuthor().getId())
+                    .filter(u -> u.getId() == uId)
                     .findFirst();
 
             if (userMatch.isPresent()) {
+                Comment comment;
+                JsonParser parser = new JsonParser();
+                JsonElement json = parser.parse(new InputStreamReader(is, "UTF-8"));
+                long commentId = Comment.getCounter().get();
+                comment = gson.fromJson(json, Comment.class);
+
                 comment = new Comment.CommentBuilder()
                         .id(commentId)
                         .author(userMatch.get())
@@ -172,7 +171,6 @@ public class CommentService {
                     photoMatch.get().getAuthor().getNotifications().add(nf);
                     notificationList.add(nf);
                 }
-
             } else {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
@@ -183,30 +181,30 @@ public class CommentService {
     }
 
     @POST
-    @Path("/{pId}/reply/{cId}")
+    @Path("/{pId}/reply/{uId}/{cId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addReplyToComment(@PathParam("pId") long pId, @PathParam("cId") long cId, InputStream is) throws UnsupportedEncodingException {
+    public Response addReplyToComment(@PathParam("pId") long pId, @PathParam("uId") long uId,
+                                      @PathParam("cId") long cId, InputStream is) throws UnsupportedEncodingException {
         Optional<Photo> photoMatch = photoList.stream()
                 .filter(p -> p.getId() == pId)
                 .findFirst();
         if (photoMatch.isPresent()) {
-            Optional<Comment> commentMatch = commentList.stream()
-                    .filter(c -> c.getId() == cId)
+            Optional<User> userMatch = userList.stream()
+                    .filter(u -> u.getId() == uId)
                     .findFirst();
-            if (commentMatch.isPresent()) {
-                Comment reply;
-                JsonParser parser = new JsonParser();
-                JsonElement json = parser.parse(new InputStreamReader(is, "UTF-8"));
-                long commentId = Comment.getCounter().get();
-                reply = gson.fromJson(json, Comment.class);
 
-                Comment finalComment = reply;
-                Optional<User> userMatch = userList.stream()
-                        .filter(u -> u.getId() == finalComment.getAuthor().getId())
+            if (userMatch.isPresent()) {
+                Optional<Comment> commentMatch = commentList.stream()
+                        .filter(c -> c.getId() == cId)
                         .findFirst();
+                if (commentMatch.isPresent()) {
+                    Comment reply;
+                    JsonParser parser = new JsonParser();
+                    JsonElement json = parser.parse(new InputStreamReader(is, "UTF-8"));
+                    long commentId = Comment.getCounter().get();
+                    reply = gson.fromJson(json, Comment.class);
 
-                if (userMatch.isPresent()) {
                     reply = new Comment.CommentBuilder()
                             .id(commentId)
                             .author(userMatch.get())
@@ -233,7 +231,7 @@ public class CommentService {
                         notificationList.add(nfComment);
                     }
                     if (reply.getAuthor().getId() != commentMatch.get().getAuthor().getId()) {
-                        Notification nfReply =  new Notification.NotificationBuilder()
+                        Notification nfReply = new Notification.NotificationBuilder()
                                 .id()
                                 .comment(reply)
                                 .isReply(true)
@@ -248,6 +246,7 @@ public class CommentService {
                     return Response.status(Response.Status.NOT_FOUND).build();
             } else
                 return Response.status(Response.Status.NOT_FOUND).build();
+
         } else
             return Response.status(Response.Status.NOT_FOUND).build();
 
