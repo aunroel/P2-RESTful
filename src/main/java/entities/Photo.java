@@ -55,7 +55,7 @@ public class Photo {
         return "Photo ID: " + id
                 + "\nAuthor: " + author.getUserName()
                 + "\nname: " + name
-                + "\ncomments amount: " + getCommentsAmount()
+                + "\ncomments amount: " + getCommentsAmount(comments)
                 + "\n";
     }
 
@@ -66,7 +66,7 @@ public class Photo {
      * of the system.
      * @return
      */
-    private int getCommentsAmount() {
+    public static int getCommentsAmount(ArrayList<Comment> comments) {
         ArrayList<Long> countedComments = new ArrayList<>();
         for (int i = 0; i < comments.size(); i++) {
             if (!countedComments.contains(comments.get(i).getId())) {
@@ -86,7 +86,7 @@ public class Photo {
      * @param replies
      * @param cc
      */
-    private void countNestedReplies(ArrayList<Comment> replies, ArrayList<Long> cc) {
+    private static void countNestedReplies(ArrayList<Comment> replies, ArrayList<Long> cc) {
         for (int i = 0; i < replies.size(); i++) {
             if (!cc.contains(replies.get(i).getId())) {
                 cc.add(replies.get(i).getId());

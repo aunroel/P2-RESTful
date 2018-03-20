@@ -158,13 +158,12 @@ public class PseudoDB {
                 .isReply(true)
                 .build();
 
-        // TODO fix replies with nicky and sam counter
-
+        // link replies to their comments
         samToNicky.getReplies().add(nickyRepliesSam);
-        samToNicky.getReplies().add(samRepliesNicky);
         aaronCommentsNicky.getReplies().add(nickyRepliesAaron);
-//        nickyRepliesSam.getReplies().add(samRepliesNicky);
+        nickyRepliesSam.getReplies().add(samRepliesNicky);
 
+        // link users to their comments
         nicky.getComments().add(nickyRepliesSam);
         nicky.getComments().add(nickyToAaron);
         nicky.getComments().add(nickyRepliesAaron);
@@ -173,16 +172,19 @@ public class PseudoDB {
         sam.getComments().add(samRepliesNicky);
         bear.getComments().add(bearToItself);
 
+        // link photos to their original comments
         nickyPhoto.getComments().add(samToNicky);
         nickyPhoto.getComments().add(aaronCommentsNicky);
         aaronPhoto.getComments().add(nickyToAaron);
         bearPhoto.getComments().add(bearToItself);
 
+        // link notifications to their owners
         sam.getNotifications().add(samReplyNotification);
         nicky.getNotifications().add(nickyReplyNotif);
         aaron.getNotifications().add(aaronNewCommNotif);
         aaron.getNotifications().add(aaronReplyNotif);
 
+        // link photos to their owners
         nicky.getPhotos().add(nickyPhoto);
         bear.getPhotos().add(bearPhoto);
         aaron.getPhotos().add(aaronPhoto);

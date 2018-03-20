@@ -130,7 +130,7 @@ public class Comment {
                 + "\nAuthor: " + author.getUserName()
                 + "\ntimestamp: " + timeStamp
                 + "\nbody: \"" + body + "\""
-                + "\nreplies: " + replies.size()
+                + "\nreplies: " + Photo.getCommentsAmount(replies)
                 + "\nup votes: " + upVotes
                 + "\ndown votes: " + downVotes
                 + "\nis read: " + isRead
